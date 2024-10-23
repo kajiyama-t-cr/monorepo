@@ -35,9 +35,10 @@ jobs:
           result-encoding: string
           script: |
               const commits = ${{ steps.get-commits.outputs.commits }} 
+              const parsed = JSON.parse(commits);
               const foo = [];
-              for (const commit of commits) {
+              for (const commit of parsed) {
                 foo.push(`--include "${commit}/*"`)
               }
-              console.log({foo})
+              console.log({parsed, foo})
               return foo.join(' ')
