@@ -1,0 +1,44 @@
+name: Frontend CI
+
+on:
+  pull_request:
+    types:
+      - synchronize
+      
+jobs:
+  tmp:
+    name: "tmp"
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout for GitHub Actions
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 
+
+      - name: List PR commits dayo
+        id: get-commits
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          COMMITS=$(gh pr view ${{ github.event.pull_request.number }} --json commits | jq ".commits[].oid" | jq -s '.' | jq '@json')
+          echo "commits=${COMMITS}" >> $GITHUB_OUTPUT   
+
+      - name: echo vars
+        run: |
+          echo ${{ steps.get-commits.outputs.commits }}  
+
+      - name: List PR commits dayo
+        uses: actions/github-script@v6
+        env:
+          GH_TOKEN: ${{ github.token }}
+        with:
+          result-encoding: string
+          script: |
+              const commits = ${{ steps.get-commits.outputs.commits }} 
+              const parsed = JSON.parse(commits);
+              const foo = [];
+              for (const commit of parsed) {
+                foo.push(`--include "${commit}/*"`)
+              }
+              console.log({parsed, foo})
+              return foo.join(' ')
