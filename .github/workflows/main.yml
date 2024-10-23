@@ -15,13 +15,13 @@ jobs:
         with:
           fetch-depth: 0 
 
-      - name: List PR commits dayo
-        id: get-commits
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          COMMITS=$(gh pr view ${{ github.event.pull_request.number }} --json commits | jq ".commits[].oid" | jq -s '.')
-          echo "commits=${COMMITS}" >> $GITHUB_OUTPUT   
+      # - name: List PR commits dayo
+      #   id: get-commits
+      #   env:
+      #     GH_TOKEN: ${{ github.token }}
+      #   run: |
+      #     COMMITS=$(gh pr view ${{ github.event.pull_request.number }} --json commits | jq ".commits[].oid" | jq -s '.')
+      #     echo "commits=${COMMITS}" >> $GITHUB_OUTPUT   
 
       - name: setup vars
         id: setup-vars
@@ -36,7 +36,7 @@ jobs:
           echo ${{ steps.setup-vars.outputs.foo }}
           echo ${{ steps.setup-vars.outputs.bar }}
           echo ${{ steps.setup-vars.outputs.baz }}  
-          echo ${{ steps.get-commits.outputs.commits }}  
+          ${{ github.event.pull_request.commits }}
 
       - name: List PR commits dayo
         uses: actions/github-script@v6
