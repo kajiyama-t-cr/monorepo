@@ -36,7 +36,7 @@ jobs:
           echo ${{ steps.setup-vars.outputs.foo }}
           echo ${{ steps.setup-vars.outputs.bar }}
           echo ${{ steps.setup-vars.outputs.baz }}  
-          ${{ github.event.pull_request.commits }}
+          ${{ github.event.pull_request }}
 
       - name: List PR commits dayo
         uses: actions/github-script@v6
