@@ -39,6 +39,7 @@ jobs:
 
       - name: List PR commits dayo
       - uses: actions/github-script@v6
+        env:
           GH_TOKEN: ${{ github.token }}
         with:
           result-encoding: string
