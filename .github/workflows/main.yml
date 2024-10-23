@@ -16,6 +16,37 @@ jobs:
           fetch-depth: 0 
 
       - name: List PR commits dayo
+        id: get-commits
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh pr view ${{ github.event.pull_request.number }} --json commits
+        run: |
+          COMMITS=$(COMMITS = gh pr view ${{ github.event.pull_request.number }} --json commits | jq ".commits[].oid" | jq -s '.')
+          echo "commits=${COMMITS}" >> $GITHUB_OUTPUT   
+
+      - name: setup vars
+        id: setup-vars
+        run: |
+          echo "foo=FOO" >> $GITHUB_OUTPUT
+          echo "bar=BAR" >> $GITHUB_OUTPUT
+          TODAY=$(date +"%Y-%m-%d")
+          echo "baz=${TODAY}" >> $GITHUB_OUTPUT          
+      - name: echo vars
+        run: |
+          echo ${{ steps.setup-vars.outputs.foo }}
+          echo ${{ steps.setup-vars.outputs.bar }}
+          echo ${{ steps.setup-vars.outputs.baz }}  
+          echo ${{ steps.get-commits.outputs.commits }}  
+
+      - name: List PR commits dayo
+      - uses: actions/github-script@v6
+          GH_TOKEN: ${{ github.token }}
+        with:
+          result-encoding: string
+          script: |
+              const commits = ${{ steps.get-commits.outputs.commits }} 
+              const foo = [];
+              for (const commit of commits) {
+                foo.push('--include "folder1/*"')
+              }
+              console.log({foo})
+              return foo.join(' ')
