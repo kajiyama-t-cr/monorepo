@@ -29,7 +29,8 @@ jobs:
           echo "foo=FOO" >> $GITHUB_OUTPUT
           echo "bar=BAR" >> $GITHUB_OUTPUT
           TODAY=$(date +"%Y-%m-%d")
-          echo "baz=${TODAY}" >> $GITHUB_OUTPUT          
+          echo "baz=${TODAY}" >> $GITHUB_OUTPUT
+          
       - name: echo vars
         run: |
           echo ${{ steps.setup-vars.outputs.foo }}
