@@ -15,7 +15,7 @@ jobs:
         with:
           fetch-depth: 0 
 
-      - name: List PR commits
+      - name: List PR commits dayo
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh pr view ${{ github.event.pull_request.number }} --json commits
