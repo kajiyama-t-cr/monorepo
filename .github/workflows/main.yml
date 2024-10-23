@@ -38,17 +38,17 @@ jobs:
           echo ${{ steps.setup-vars.outputs.baz }}  
           echo ${{ steps.get-commits.outputs.commits }}  
 
-      - name: List PR commits dayo
-      - uses: actions/github-script@v6
-        env:
-          GH_TOKEN: ${{ github.token }}
-        with:
-          result-encoding: string
-          script: |
-              const commits = ${{ steps.get-commits.outputs.commits }} 
-              const foo = [];
-              for (const commit of commits) {
-                foo.push('--include "folder1/*"')
-              }
-              console.log({foo})
-              return foo.join(' ')
+      # - name: List PR commits dayo
+      # - uses: actions/github-script@v6
+      #   env:
+      #     GH_TOKEN: ${{ github.token }}
+      #   with:
+      #     result-encoding: string
+      #     script: |
+      #         const commits = ${{ steps.get-commits.outputs.commits }} 
+      #         const foo = [];
+      #         for (const commit of commits) {
+      #           foo.push('--include "folder1/*"')
+      #         }
+      #         console.log({foo})
+      #         return foo.join(' ')
