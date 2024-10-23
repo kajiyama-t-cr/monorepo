@@ -37,7 +37,7 @@ jobs:
               const commits = ${{ steps.get-commits.outputs.commits }} 
               const foo = [];
               for (const commit of commits) {
-                foo.push('--include "folder1/*"')
+                foo.push(`--include "${commit}/*"`)
               }
               console.log({foo})
               return foo.join(' ')
