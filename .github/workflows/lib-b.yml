@@ -1,4 +1,4 @@
-name: Frontend CI
+name: lib-b CI
 
 on:
   pull_request:
