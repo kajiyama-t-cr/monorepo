@@ -2,7 +2,13 @@ name: Frontend CI
 
 on:
   pull_request:
+    paths:
+      - "packages/lib-b/src/**"
+      - ".github/workflows/lib-b.yml"
     types:
+      - ready_for_review
+      - opened
+      - reopened
       - synchronize
       
 jobs:
