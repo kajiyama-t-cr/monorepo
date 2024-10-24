@@ -1,10 +1,10 @@
-name: Frontend CI
+name: lib-a CI
 
 on:
   pull_request:
-    types:
-      - synchronize
-      
+    paths:
+      - "packages/lib-a/src/**"
+      - ".github/workflows/lib-a.yml"
 jobs:
   tmp:
     name: "tmp"
